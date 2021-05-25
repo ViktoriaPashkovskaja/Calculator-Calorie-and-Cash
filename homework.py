@@ -1,81 +1,83 @@
 import datetime as dt
 from typing import List, Optional
 
+
 class Calculator:
     """Создание класса Calculator"""
-    def __init__(self, limit: float)->None:
+    def __init__(self, limit: float) -> None:
         self.limit = limit
-        self.records:List = []
-        print(f'Ваш лимит:{limit}!') 
+        self.records: List = []
+        print(f'Ваш лимит:{limit}!')
 
-    def add_record(self, rec)->None: 
+    def add_record(self, rec) -> None:
         self.records.append(rec)
-        print(f'Количество: {rec.amount}, с комментарием {rec.comment} на {rec.date} ') 
+        print(f'Сумма: {rec.amount} комментарий {rec.comment} на {rec.date}')
 
-    def get_today_status(self)->float:
+    def get_today_status(self) -> float:
         """Расчет расходов за день"""
-        today_status:float = 0 
-        now = dt.date.today() 
-        
-        for rec in self.records: 
+        today_status = 0
+        now = dt.date.today()
+        for rec in self.records:
             if rec.date == now:
-                today_status += rec.amount 
-    
+                today_status += rec.amount
         return today_status
-                
-    def get_week_stats(self)->float:
-        """Данные за неделю""" 
-        count_cash_week:float = 0
+
+    def get_week_stats(self):
+        """Данные за неделю"""
+        count_cash_week = 0
         today = dt.datetime.today().date()
         day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=7))
-       
         for rec in self.records:
             if today >= rec.date >= day_week_ago:
                 count_cash_week += rec.amount
-        return count_cash_week    
-    
+        return count_cash_week
+
+
 class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
         calories_amount = self.get_today_status()
-        if calories_amount < self.limit: 
-            print(f'Сегодня можно съесть что-нибудь ещё, но с общей калорийностью не более {self.limit - calories_amount} кКал»')
+        calorr = self.limit - calories_amount
+        if calories_amount < self.limit:
+            print('Сегодня можно съесть что-нибудь ещё, '
+                  f'но с общей калорийностью не более {calorr} кКал»')
+
         else:
             print('Хватит есть!')
 
+
 class CashCalculator(Calculator):
-    """Калькулятор для денег. Показывает в трех валютах потраченные деньги за день и неделю"""   
+    """Калькулятор для денег"""
     USD_RATE = float(73.59)
-    EURO_RATE = float(89.78) 
+    EURO_RATE = float(89.78)
     RUB_RATE = float(1)
-    
-    def get_today_cash_remained(self, currency): 
-        
-        today_cash: float = self.get_today_status()
- 
-        if currency == 'usd': 
-            curr:str = 'USD'
-            balance = round((self.limit - today_cash) / self.USD_RATE, 2) 
+
+    def get_today_cash_remained(self, currency):
+        today_cash = self.get_today_status()
+        if currency == 'usd':
+            curr = 'USD'
+            balance = round((self.limit - today_cash) / self.USD_RATE, 2)
         elif currency == 'eur':
             curr = 'EUR'
-            balance = round((self.limit - today_cash) / self.EUR_RATE, 2) 
+            balance = round((self.limit - today_cash) / self.EUR_RATE, 2)
         elif currency == 'rub':
             curr = 'RUB'
             balance = round((self.limit - today_cash) / self.RUB_RATE, 2)
         else:
             currency = ''
             print('Нет такой валюты')
-        
-        if today_cash<self.limit:
-            money_days:float = 'На сегодня осталось ' + str(balance) + ' ' + curr
+        if today_cash < self.limit:
+            money_days = 'На сегодня осталось ' + str(balance) + ' ' + curr
         elif today_cash == self.limit:
             money_days = 'Денег нет, держись'
         else:
-            money_days = 'Денег нет, держись: твой долг - ' + str(balance) + ' ' + curr
+            money_days = 'Денег нет, держись: твой долг - ', str(balance), curr
         return money_days
-    
+
+
 class Record:
     """Класс для создания записей"""
-    def __init__(self, amount:float, comment:str, date:Optional[str] = None)->None:
+    def __init__(self, amount: float,
+                 comment: str, date: Optional[str] = None) -> None:
         self.amount = amount
         self.comment = comment
         date_format = '%d.%m.%Y'
