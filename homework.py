@@ -64,11 +64,11 @@ class CashCalculator(Calculator):
             currency = ''
             print(f'Нет такой валюты')
         if today_cash < self.limit:
-            money_days = f'На сегодня осталось {abs(str(balance))}{str(curr)}'
+            money_days = 'На сегодня осталось {abs(str(balance))}{str(curr)}'
         elif today_cash == self.limit:
-            money_days = f'Денег нет, держись'
+            money_days = 'Денег нет, держись'
         else:
-            money_days = f'Денег нет, держись: твой долг - '
+            money_days = 'Денег нет, держись: твой долг - '
             f'{str(balance)}{curr}'
         return money_days
 
