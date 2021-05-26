@@ -13,7 +13,7 @@ class Calculator:
         self.records.append(rec)
         print(f'Сумма: {rec.amount} комментарий {rec.comment} на {rec.date}')
 
-    def get_today_status(self) -> float:
+    def get_today_stats(self) -> float:
         """Расчет расходов за день"""
         today_status = 0
         now = dt.date.today()
@@ -35,7 +35,7 @@ class Calculator:
 
 class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
-        calories_amount = self.get_today_status()
+        calories_amount = self.get_today_stats()
         calorr = self.limit - calories_amount
         if calories_amount < self.limit:
             print('Сегодня можно съесть что-нибудь ещё, '
@@ -52,7 +52,7 @@ class CashCalculator(Calculator):
     RUB_RATE = float(1)
 
     def get_today_cash_remained(self, currency):
-        today_cash = self.get_today_status()
+        today_cash = self.get_today_stats()
         if currency == 'usd':
             curr = 'USD'
             balance = round((self.limit - today_cash) / self.USD_RATE, 2)
