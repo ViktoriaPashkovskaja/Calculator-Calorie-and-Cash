@@ -54,13 +54,13 @@ class CashCalculator(Calculator):
         today_cash = self.get_today_stats()
         if currency == 'usd':
             curr = 'USD'
-            balance = abs((self.limit - today_cash) / self.USD_RATE, 2)
+            balance = abs(self.limit - today_cash)
         elif currency == 'eur':
             curr = 'Euro'
-            balance = abs((self.limit - today_cash) / self.EURO_RATE, 2)
+            balance = abs(self.limit - today_cash)
         elif currency == 'rub':
             curr = 'руб'
-            balance = abs((self.limit - today_cash) / self.RUB_RATE, 2)
+            balance = abs(self.limit - today_cash)
         else:
             currency = ''
             print('Нет такой валюты')
