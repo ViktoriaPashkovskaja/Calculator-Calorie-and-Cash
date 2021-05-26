@@ -7,7 +7,6 @@ class Calculator:
     def __init__(self, limit: float) -> None:
         self.limit = limit
         self.records: List = []
-        print(f'Ваш лимит:{limit}!')
 
     def add_record(self, rec) -> None:
         self.records.append(rec)
@@ -36,8 +35,8 @@ class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
         calories_amount = self.get_today_stats()
         calorr = self.limit - calories_amount
-        if calories_amount < self.limit:
-            print('Сегодня можно съесть что-нибудь ещё, '
+        if calorr < 0:
+            print(f'Сегодня можно съесть что-нибудь ещё, '
                   f'но с общей калорийностью не более {calorr} кКал')
 
         else:
@@ -54,23 +53,23 @@ class CashCalculator(Calculator):
         today_cash = self.get_today_stats()
         if currency == 'usd':
             curr = 'USD'
-            balance = abs(self.limit - today_cash)
+            balance = self.limit - today_cash
         elif currency == 'eur':
             curr = 'Euro'
-            balance = abs(self.limit - today_cash)
+            balance = self.limit - today_cash
         elif currency == 'rub':
             curr = 'руб'
-            balance = abs(self.limit - today_cash)
+            balance = self.limit - today_cash
         else:
             currency = ''
-            print('Нет такой валюты')
+            print(f'Нет такой валюты')
         if today_cash < self.limit:
-            money_days = 'На сегодня осталось ', str(balance), str(curr)
+            money_days = f'На сегодня осталось {abs(str(balance))}{str(curr)}'
         elif today_cash == self.limit:
-            money_days = 'Денег нет, держись'
+            money_days = f'Денег нет, держись'
         else:
-            money_days = 'Денег нет, держись: твой долг -',
-            str(balance), str(curr)
+            money_days = f'Денег нет, держись: твой долг - '
+            f'{str(balance)}{curr}'
         return money_days
 
 
