@@ -36,11 +36,9 @@ class CaloriesCalculator(Calculator):
         calories_amount = self.get_today_stats()
         calorr = self.limit - calories_amount
         if calorr > 0:
-            print(f'Сегодня можно съесть что-нибудь ещё, '
-                  f'но с общей калорийностью не более {calorr} кКал')
-
-        else:
-            print('Хватит есть!')
+            return (f'Сегодня можно съесть что-нибудь ещё, '
+          f'но с общей калорийностью не более {calorr} кКал')
+        return 'Хватит есть!'
 
 
 class CashCalculator(Calculator):
