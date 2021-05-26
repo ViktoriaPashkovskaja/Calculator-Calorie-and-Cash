@@ -62,7 +62,7 @@ class CashCalculator(Calculator):
             balance = self.limit - today_cash
         else:
             currency = ''
-            print(f'Нет такой валюты')
+            print('Нет такой валюты')
         if today_cash < self.limit:
             money_days = 'На сегодня осталось {abs(str(balance))}{str(curr)}'
         elif today_cash == self.limit:
