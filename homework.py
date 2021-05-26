@@ -11,7 +11,6 @@ class Calculator:
 
     def add_record(self, rec) -> None:
         self.records.append(rec)
-        print(f'Сумма: {rec.amount} комментарий {rec.comment} на {rec.date}')
 
     def get_today_stats(self) -> float:
         """Расчет расходов за день"""
@@ -26,7 +25,7 @@ class Calculator:
         """Данные за неделю"""
         count_cash_week = 0
         today = dt.datetime.today().date()
-        day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=7))
+        day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=6))
         for rec in self.records:
             if today >= rec.date >= day_week_ago:
                 count_cash_week += rec.amount
@@ -55,13 +54,13 @@ class CashCalculator(Calculator):
         today_cash = self.get_today_stats()
         if currency == 'usd':
             curr = 'USD'
-            balance = round((self.limit - today_cash) / self.USD_RATE, 2)
+            balance = abs((self.limit - today_cash) / self.USD_RATE, 2)
         elif currency == 'eur':
-            curr = 'EUR'
-            balance = round((self.limit - today_cash) / self.EURO_RATE, 2)
+            curr = 'Euro'
+            balance = abs((self.limit - today_cash) / self.EURO_RATE, 2)
         elif currency == 'rub':
-            curr = 'RUB'
-            balance = round((self.limit - today_cash) / self.RUB_RATE, 2)
+            curr = 'руб'
+            balance = abs((self.limit - today_cash) / self.RUB_RATE, 2)
         else:
             currency = ''
             print('Нет такой валюты')
