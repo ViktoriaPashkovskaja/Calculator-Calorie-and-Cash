@@ -37,7 +37,7 @@ class CaloriesCalculator(Calculator):
         calorr = self.limit - calories_amount
         if calorr > 0:
             return (f'Сегодня можно съесть что-нибудь ещё, '
-          f'но с общей калорийностью не более {calorr} кКал')
+                    f'но с общей калорийностью не более {calorr} кКал')
         return 'Хватит есть!'
 
 
@@ -45,27 +45,22 @@ class CashCalculator(Calculator):
     """Калькулятор для денег"""
     USD_RATE = float(73.59)
     EURO_RATE = float(89.78)
-    RUB_RATE = float(1)
 
     def get_today_cash_remained(self, currency):
         today_cash = self.get_today_stats()
-        if currency == 'usd':
-            curr = 'USD'
-            balance = self.limit - today_cash
-        elif currency == 'eur':
-            curr = 'Euro'
-            balance = self.limit - today_cash
+        currency_dict = {"rub": ["руб", 1.0],
+                         "usd": ["USD", self.USD_RATE],
+                         "eur": ["Euro", self.EURO_RATE]}
+        exchange_rate = currency_dict[currency][1]
+        money = round((self.limit - today_cash) / exchange_rate, 2)
+        if money > 0:
+            return ("На сегодня осталось "
+                    f"{money} {currency_dict[currency][0]}")
+        elif money == 0:
+            return "Денег нет, держись"
         else:
-            curr = 'руб'
-            balance = self.limit - today_cash
-        if today_cash < self.limit:
-            money_days = 'На сегодня осталось ', str(balance), str(curr)
-        elif today_cash == self.limit:
-            money_days = 'Денег нет, держись'
-        else:
-            money_days = 'Денег нет, держись: твой долг - '
-            f'{abs(balance)}{curr}'
-        return money_days
+            return ("Денег нет, держись: твой долг - "
+                    f"{abs(money)} {currency_dict[currency][0]}")
 
 
 class Record:
