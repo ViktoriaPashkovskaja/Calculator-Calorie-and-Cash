@@ -26,7 +26,7 @@ class Calculator:
         today = dt.datetime.today().date()
         day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=7))
         for rec in self.records:
-            if today > rec.date > day_week_ago:
+            if today >= rec.date > day_week_ago:
                 count_cash_week += rec.amount
         return count_cash_week
 
@@ -35,7 +35,7 @@ class CaloriesCalculator(Calculator):
     def get_calories_remained(self):
         calories_amount = self.get_today_stats()
         calorr = self.limit - calories_amount
-        if calorr < 0:
+        if calorr > 0:
             print(f'Сегодня можно съесть что-нибудь ещё, '
                   f'но с общей калорийностью не более {calorr} кКал')
 
