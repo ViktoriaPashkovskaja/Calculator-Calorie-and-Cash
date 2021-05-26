@@ -25,9 +25,9 @@ class Calculator:
         """Данные за неделю"""
         count_cash_week = 0
         today = dt.datetime.today().date()
-        day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=6))
+        day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=7))
         for rec in self.records:
-            if today >= rec.date >= day_week_ago:
+            if today > rec.date > day_week_ago:
                 count_cash_week += rec.amount
         return count_cash_week
 
