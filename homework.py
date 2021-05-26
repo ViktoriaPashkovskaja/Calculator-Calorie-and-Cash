@@ -58,7 +58,7 @@ class CashCalculator(Calculator):
             balance = round((self.limit - today_cash) / self.USD_RATE, 2)
         elif currency == 'eur':
             curr = 'EUR'
-            balance = round((self.limit - today_cash) / self.EUR_RATE, 2)
+            balance = round((self.limit - today_cash) / self.EURO_RATE, 2)
         elif currency == 'rub':
             curr = 'RUB'
             balance = round((self.limit - today_cash) / self.RUB_RATE, 2)
@@ -66,11 +66,12 @@ class CashCalculator(Calculator):
             currency = ''
             print('Нет такой валюты')
         if today_cash < self.limit:
-            money_days = 'На сегодня осталось ' + str(balance) + ' ' + curr
+            money_days = 'На сегодня осталось ', str(balance), str(curr)
         elif today_cash == self.limit:
             money_days = 'Денег нет, держись'
         else:
-            money_days = 'Денег нет, держись: твой долг - ', str(balance), curr
+            money_days = 'Денег нет, держись: твой долг -',
+            str(balance), str(curr)
         return money_days
 
 
