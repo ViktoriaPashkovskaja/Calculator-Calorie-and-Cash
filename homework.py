@@ -39,7 +39,7 @@ class CaloriesCalculator(Calculator):
         calorr = self.limit - calories_amount
         if calories_amount < self.limit:
             print('Сегодня можно съесть что-нибудь ещё, '
-                  f'но с общей калорийностью не более {calorr} кКал»')
+                  f'но с общей калорийностью не более {calorr} кКал')
 
         else:
             print('Хватит есть!')
