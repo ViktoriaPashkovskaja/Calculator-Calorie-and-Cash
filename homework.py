@@ -15,9 +15,8 @@ class Calculator:
         """Расчет расходов за день"""
         today_status = 0
         now = dt.date.today()
-        for rec in self.records:
-            if rec.date == now:
-                today_status += rec.amount
+        today_status = [sum(record.amount)
+                        for record in self.records if record.date == now]
         return today_status
 
     def get_week_stats(self):
@@ -25,9 +24,9 @@ class Calculator:
         count_cash_week = 0
         today = dt.datetime.today().date()
         day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=7))
-        for rec in self.records:
-            if today >= rec.date > day_week_ago:
-                count_cash_week += rec.amount
+        count_cash_week = [sum(record.amount)
+                           for record in self.records
+                           if today >= record.date > day_week_ago]
         return count_cash_week
 
 
@@ -43,8 +42,8 @@ class CaloriesCalculator(Calculator):
 
 class CashCalculator(Calculator):
     """Калькулятор для денег"""
-    USD_RATE = float(73.59)
-    EURO_RATE = float(89.78)
+    USD_RATE = 73.59
+    EURO_RATE = 89.78
 
     def get_today_cash_remained(self, currency):
         today_cash = self.get_today_stats()
@@ -52,15 +51,17 @@ class CashCalculator(Calculator):
                          "usd": ["USD", self.USD_RATE],
                          "eur": ["Euro", self.EURO_RATE]}
         exchange_rate = currency_dict[currency][1]
-        money = round((self.limit - today_cash) / exchange_rate, 2)
+        money = round(self.limit - today_cash)
         if money > 0:
-            return ("На сегодня осталось "
-                    f"{money} {currency_dict[currency][0]}")
-        elif money == 0:
+            money_currency = money / exchange_rate, 2
+            currency = currency_dict[currency][0]
+            return ("На сегодня осталось {money_currency}{currency}")
+        if money == 0:
             return "Денег нет, держись"
-        else:
-            return ("Денег нет, держись: твой долг - "
-                    f"{abs(money)} {currency_dict[currency][0]}")
+        if money < 0:
+            money_currency = abs(money) / exchange_rate, 2
+            currency = currency_dict[currency][0]
+            return ("Денег нет, держись: твой долг - {money}{currency}")
 
 
 class Record:
