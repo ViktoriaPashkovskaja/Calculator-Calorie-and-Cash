@@ -61,7 +61,7 @@ class CashCalculator(Calculator):
         if money < 0:
             money_currency = abs(money) / exchange_rate, 2
             currency = currency_dict[currency][0]
-            return ("Денег нет, держись: твой долг - {money}{currency}")
+            return ("Денег нет, держись: твой долг - {money_currency}{currency}")
 
 
 class Record:
