@@ -53,15 +53,15 @@ class CashCalculator(Calculator):
         exchange_rate = currency_dict[currency][1]
         money = round(self.limit - today_cash)
         if money > 0:
-            money_currency = money / exchange_rate, 2
+            money = money / exchange_rate, 2
             currency = currency_dict[currency][0]
-            return ("На сегодня осталось {money_currency}{currency}")
+            return ("На сегодня осталось {money}{currency}")
         if money == 0:
             return "Денег нет, держись"
         if money < 0:
-            money_currency = abs(money) / exchange_rate, 2
+            money = abs(money) / exchange_rate, 2
             currency = currency_dict[currency][0]
-            return ("Денег нет, держись: твой долг - {money_currency}{currency}")
+            return ("Денег нет, держись: твой долг - {money}{currency}")
 
 
 class Record:
