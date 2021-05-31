@@ -15,7 +15,7 @@ class Calculator:
         """Расчет расходов за день"""
         today_status = 0
         now = dt.date.today()
-        today_status = [sum(record.amount)
+        today_status = [sum(float(record.amount))
                         for record in self.records if record.date == now]
         return today_status
 
@@ -24,8 +24,7 @@ class Calculator:
         count_cash_week = 0
         today = dt.datetime.today().date()
         day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=7))
-        count_cash_week = [sum(record.amount)
-                           for record in self.records
+        count_cash_week = [sum(float(record.amount)) for record in self.records
                            if today >= record.date > day_week_ago]
         return count_cash_week
 
