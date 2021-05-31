@@ -25,9 +25,9 @@ class Calculator:
         count_cash_week = 0
         today = dt.datetime.today().date()
         day_week_ago = (dt.datetime.today().date() - dt.timedelta(days=7))
-        for rec in self.records:
-            if today >= rec.date > day_week_ago:
-                count_cash_week += rec.amount
+        for record in self.records:
+            if today >= record.date > day_week_ago:
+                count_cash_week += record.amount
         return count_cash_week
 
 
@@ -54,13 +54,12 @@ class CashCalculator(Calculator):
         exchange_rate = currency_dict[currency][1]
         money = round(self.limit - today_cash)
         if money > 0:
-            money = money / exchange_rate, 2
             currency = currency_dict[currency][0]
             return ("На сегодня осталось {money}{currency}")
         if money == 0:
             return "Денег нет, держись"
         if money < 0:
-            money = abs(money) / exchange_rate, 2
+            money = abs(money)
             currency = currency_dict[currency][0]
             return ("Денег нет, держись: твой долг - {money}{currency}")
 
