@@ -59,9 +59,8 @@ class CashCalculator(Calculator):
             return ("На сегодня осталось {money} {currency}")
         if money == 0:
             return "Денег нет, держись"
-        if money < 0:
-            money = abs(money) / exchange_rate, 2
-            return ("Денег нет, держись: твой долг - {money} {currency}")
+        money = abs(money) / exchange_rate, 2
+        return ("Денег нет, держись: твой долг - {money} {currency}")
 
 
 class Record:
